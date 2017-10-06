@@ -63,6 +63,7 @@
                 </button>    
             </form>
           </div>
+        <div id="result" style="padding-left: 2%"></div>
     </body>
     <script>
         $(document).ready(function() {       
@@ -74,7 +75,11 @@
                     data: $("#myForm").serialize(), // serializes the form's elements.
                     success: function(data)
                     {
-                        alert(data); // show response from the php script.
+                        $('#result').empty();
+                        for(var x=0;x<data.length;x++)
+                        {
+                            $('#result').append(data[x]+"<br>"); // show response from the php script.
+                        }
                     }
                 });
             });
