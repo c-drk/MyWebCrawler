@@ -65,5 +65,41 @@ public class Spider {
         }
     }
     
-   
+    public String getHtmlTableData()
+    {        
+        System.out.println("Analizando la estructura del documento ");
+        try{
+            String originalText = this.htmlDocument.body().text();        
+            Element body = this.htmlDocument.select("body").get(0); //seleccionamos el contenido de body
+            table = body.select("table.itemList").get(0); //seleccionamos la primera tabla con la clase itemList
+            Elements rows = table.select("tr");
+            tableData="";
+            for (int i = 0; i < rows.size(); i++) { 
+                Element row = rows.get(i);
+                //filtra los td con clase title y los span con clase rank (que serian los números de entrada)
+                Elements colsNumbers = row.select("td.title").select("span.rank"); 
+                //filtra los td con clase title y los span con clase storylink (que serian los títulos de la entrada)
+                Elements colsTitle= row.select("td.title").select("a.storylink");
+                if(!((colsNumbers.text().isEmpty()) || (colsTitle.text().isEmpty())))
+                {
+                    //System.out.println(colsNumbers.text()+colsTitle.text());
+                    tableData+=colsNumbers.text()+colsTitle.text();
+                    this.titles.add(colsNumbers.text()+colsTitle.text());
+                }
+                //filtra los td con clase subtext
+                Elements colsSubText = row.select("td.subtext");   
+                if(!colsSubText.text().isEmpty()) {            
+                    System.out.println(colsSubText.text());
+                    
+                }
+            }
+            //System.out.println(tableData);
+            return tableData;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+    
+    
 }
