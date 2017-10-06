@@ -28,17 +28,19 @@ public class DefaultController {
     }   
     
     @RequestMapping(value = "/submitForm", method = RequestMethod.POST)
-    public List<String> updateDisplay(@RequestParam(value="url", required=true) String url,@RequestParam(value="metodos", required=true) int metodos,@RequestParam(value="filters", required=true) String[]filters) {
+    public @ResponseBody List<String> updateDisplay(@RequestParam(value="url", required=true) String url,@RequestParam(value="metodos", required=true) int metodos,@RequestParam(value="filters", required=true) String[] filters) {
         //String url=form.getUrl();
         //int metodos=form.getMetodos();
         //List<String> filters=form.getFilters();
+        
         List<String> listfilters=Arrays.asList(filters); 
         HtmlDocument website=new HtmlDocument(url, listfilters);
         Spider spider=new Spider(website);
-            spider.getConnection();
+        spider.getConnection();
         spider.getHtmlTableData();
-        //return spider.result(metodos);     
-        return listfilters;
+        
+        return spider.result(metodos);     
+        //return "hola";
     }
     
     @RequestMapping(value = "/test")
