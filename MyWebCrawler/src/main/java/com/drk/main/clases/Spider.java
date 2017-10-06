@@ -213,7 +213,7 @@ public class Spider {
         }
         for (int i = 0; i < titlesresulSet.size(); i++) { 
             System.out.println(titlesresulSet.get(i)+ " points: "+points.get(i)+" comments:"+comments.get(i));
-            finalResult.add( titlesresulSet.get(i)+ " <font color='red'><b>points:</b></font> "+points.get(i)+" <font color='green'><b>comments:</b></font>"+comments.get(i) );
+            finalResult.add( titlesresulSet.get(i)+ " <font color='red'><b>points: </b></font>"+points.get(i)+" <font color='green'><b>comments: </b></font>"+comments.get(i) );
         }
         return finalResult;
     }
