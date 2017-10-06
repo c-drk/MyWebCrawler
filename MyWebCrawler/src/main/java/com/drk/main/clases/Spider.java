@@ -82,14 +82,14 @@ public class Spider {
                 Elements colsTitle= row.select("td.title").select("a.storylink");
                 if(!((colsNumbers.text().isEmpty()) || (colsTitle.text().isEmpty())))
                 {
-                    //System.out.println(colsNumbers.text()+colsTitle.text());
+                    System.out.println(colsNumbers.text()+colsTitle.text());
                     tableData+=colsNumbers.text()+colsTitle.text();
                     this.titles.add(colsNumbers.text()+colsTitle.text());
                 }
                 //filtra los td con clase subtext
                 Elements colsSubText = row.select("td.subtext");   
                 if(!colsSubText.text().isEmpty()) {            
-                    //System.out.println(colsSubText.text());
+                    System.out.println(colsSubText.text());
                     tableData+=searchForWord(colsSubText.text());
                     this.subtext.add(searchForWord(colsSubText.text()));
                 }
@@ -105,7 +105,7 @@ public class Spider {
     private String searchForWord(String txt)
     {
         
-        //System.out.println("Buscando los parámetros .."+txt);
+        System.out.println("Buscando los parámetros .."+txt);
         List<String> filters=this.htmlobject.getFilters();
         int firstIndex=txt.indexOf(filters.get(0));
         String points="";
@@ -135,7 +135,7 @@ public class Spider {
         else{
                 comments=txt.substring(txt.indexOf("e | ")+4,lastIndex-1);
             }
-        //System.out.println(String.format("points %scomments %s", points, comments));
+        System.out.println(String.format("points %scomments %s", points, comments));
         return String.format("points %scomments %s", points, comments);
     }
     
@@ -213,7 +213,7 @@ public class Spider {
         }
         for (int i = 0; i < titlesresulSet.size(); i++) { 
             System.out.println(titlesresulSet.get(i)+ " points: "+points.get(i)+" comments:"+comments.get(i));
-            finalResult.add( titlesresulSet.get(i)+ "points: "+points.get(i)+" comments:"+comments.get(i) );
+            finalResult.add( titlesresulSet.get(i)+ " <font color='red'><b>points:</b></font> "+points.get(i)+" <font color='green'><b>comments:</b></font>"+comments.get(i) );
         }
         return finalResult;
     }
