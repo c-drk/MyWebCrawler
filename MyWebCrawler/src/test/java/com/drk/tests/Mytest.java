@@ -57,5 +57,20 @@ public class Mytest {
         assertFalse(new Spider(website).getConnection());                      
     }
     
-   
+     @Test
+    public void testEquality() {
+        List<String> filters = new ArrayList<>();
+        filters.add("points");
+        filters.add("point");
+        filters.add("comments");
+        filters.add("comment");
+        HtmlDocument website=new HtmlDocument("https://news.ycombinator.com/", filters);
+        Spider spider=new Spider(website);
+                spider.getConnection();
+        //En caso de no haber conexión el método devuelve null
+        //assertEquals(null,spider.getHtmlTableData());
+        assertNotEquals(null,spider.getHtmlTableData());
+        assertNotEquals(null,spider.result(2));
+        
+    }
 }
