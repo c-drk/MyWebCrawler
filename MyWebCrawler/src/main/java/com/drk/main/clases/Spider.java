@@ -89,8 +89,9 @@ public class Spider {
                 //filtra los td con clase subtext
                 Elements colsSubText = row.select("td.subtext");   
                 if(!colsSubText.text().isEmpty()) {            
-                    System.out.println(colsSubText.text());
-                    
+                    //System.out.println(colsSubText.text());
+                    tableData+=searchForWord(colsSubText.text());
+                    this.subtext.add(searchForWord(colsSubText.text()));
                 }
             }
             //System.out.println(tableData);
@@ -99,6 +100,43 @@ public class Spider {
         catch(Exception e){
             return null;
         }
+    }
+    
+    private String searchForWord(String txt)
+    {
+        
+        //System.out.println("Buscando los parámetros .."+txt);
+        List<String> filters=this.htmlobject.getFilters();
+        int firstIndex=txt.indexOf(filters.get(0));
+        String points="";
+        if ( firstIndex == -1){
+            firstIndex=txt.indexOf(filters.get(1));
+            if(firstIndex == -1){
+                points="0 ";
+            }
+            else{
+                points=txt.substring(0,firstIndex); 
+            }
+        }   
+        else{
+                points=txt.substring(0,firstIndex); 
+            }
+        String comments="";
+        int lastIndex=txt.indexOf(filters.get(2));
+        if ( lastIndex == -1){
+            lastIndex=txt.indexOf(filters.get(3));
+            if(lastIndex == -1){
+                comments="0 ";
+            }
+            else{
+                comments=txt.substring(txt.indexOf("e | ")+4,lastIndex-1);
+            }
+        }
+        else{
+                comments=txt.substring(txt.indexOf("e | ")+4,lastIndex-1);
+            }
+        //System.out.println(String.format("points %scomments %s", points, comments));
+        return String.format("points %scomments %s", points, comments);
     }
     
     
