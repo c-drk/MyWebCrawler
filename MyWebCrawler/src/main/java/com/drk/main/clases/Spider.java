@@ -139,5 +139,83 @@ public class Spider {
         return String.format("points %scomments %s", points, comments);
     }
     
+    public List<String> result(int option){
+        List<String>titlesresulSet = new ArrayList<>();
+        List<String>finalResult = new ArrayList<>();
+        List<Integer>points = new ArrayList<>();
+        List<Integer>comments = new ArrayList<>();
+        int auxPoints;
+        int auxComments;
+        String auxTitle;
+        StringTokenizer st;
+        switch(option){
+            case 1:
+                for (int i = 0; i < this.titles.size(); i++) { 
+                    st = new StringTokenizer(this.titles.get(i));
+                    //System.out.println(st.countTokens());
+                    if(st.countTokens()>5)
+                    {
+                        titlesresulSet.add(this.titles.get(i));
+                        String aux1=this.subtext.get(i).split(" ")[1];               
+                        points.add(Integer.parseInt(aux1.substring(0,aux1.length())));  
+                        aux1=this.subtext.get(i).split(" ")[3];
+                        comments.add(Integer.parseInt(aux1.substring(0,aux1.length())));
+                    }
+                }
+                for (int i = 0; i < comments.size()-1; i++) { 
+                    for (int j = i+1; j < comments.size(); j++) { 
+                        if(comments.get(i)<comments.get(j))
+                        {
+                            auxPoints=points.get(i);
+                            points.set(i,points.get(j));
+                            points.set(j,auxPoints);
+                            auxComments=comments.get(i);
+                            comments.set(i,comments.get(j));
+                            comments.set(j,auxComments);
+                            auxTitle=titlesresulSet.get(i);
+                            titlesresulSet.set(i,titlesresulSet.get(j));
+                            titlesresulSet.set(j,auxTitle);
+                        }
+                    }                    
+                }               
+                break;
+            case 2:
+                for (int i = 0; i < this.titles.size(); i++) { 
+                    st = new StringTokenizer(this.titles.get(i));
+                    if(st.countTokens()<=5)
+                    {
+                        titlesresulSet.add(this.titles.get(i));
+                        String aux1=this.subtext.get(i).split(" ")[1];
+                        points.add(Integer.parseInt(aux1.substring(0,aux1.length()))); 
+                        aux1=this.subtext.get(i).split(" ")[3];
+                        comments.add(Integer.parseInt(aux1.substring(0,aux1.length())));
+                    }
+                }
+                for (int i = 0; i < points.size()-1; i++) { 
+                    for (int j = i+1; j < points.size(); j++) { 
+                        if(points.get(i)<points.get(j))
+                        {
+                            auxPoints=points.get(i);
+                            points.set(i,points.get(j));
+                            points.set(j,auxPoints);
+                            auxComments=comments.get(i);
+                            comments.set(i,comments.get(j));
+                            comments.set(j,auxComments);
+                            auxTitle=titlesresulSet.get(i);
+                            titlesresulSet.set(i,titlesresulSet.get(j));
+                            titlesresulSet.set(j,auxTitle);
+                        }
+                    }
+                    
+                }
+                
+                break;
+        }
+        for (int i = 0; i < titlesresulSet.size(); i++) { 
+            System.out.println(titlesresulSet.get(i)+ " points: "+points.get(i)+" comments:"+comments.get(i));
+            finalResult.add( titlesresulSet.get(i)+ "points: "+points.get(i)+" comments:"+comments.get(i) );
+        }
+        return finalResult;
+    }
     
 }
